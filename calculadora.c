@@ -1,6 +1,6 @@
 // Inclusão das bibliotecas
 #include <stdio.h> // Necessária para as funções wprintf() e fgets().
-#include <stdlib.h> // Necessária para as funções strtof() e strtol().
+#include <stdlib.h> // Necessária para as funções strtof() e atoi().
 #include <math.h> // Necessária para a função pow().
 #include <string.h> // Necessária para a função strchr().
 #include <locale.h> // Necessária para a função setlocale().
@@ -36,13 +36,13 @@ int main() {
         }
     } while (!valido); // O loop continua enquanto não for válido (!valido), isto é, enquanto for igual a zero.
         
-    // Solicita ao usuário qual a operação desejada. A lógica da validação é a mesma utilizada na solicitação do primeiro número.
+    // Solicita ao usuário qual a operação desejada. A lógica da validação é basicamente a mesma utilizada na solicitação do primeiro número, com pequenas alterações.
     do {
         wprintf(L"\nQue operação deseja realizar?\n\n1 - Soma\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Porcentagem\n6 - Potenciação\n\nOpção: ");
         fgets(opcao_menu, 100, stdin);
-        operacao = atoi(opcao_menu); // A função atoi() converte qualquer valor possível para inteiro (int). Se não puder converter nada, o valor retornado é zero.
+        operacao = atoi(opcao_menu); // Neste caso, não precisamos da função strtof(), pois queremos apenas um número inteiro. A função atoi() converte qualquer valor possível para inteiro (int). Se não puder converter nada, o valor retornado é zero.
 
-        if (strlen(opcao_menu) != 2 || operacao < 1 || operacao > 6) { // A função strlen() retorna o tamanho (length) da variável, sendo o valor 2 no caso de um único caractere. Se for diferente de 2 (ou seja, se o usuário digitar mais de um caractere), ou se a variável "operacao" não estiver entre os números 1 e 6
+        if (strlen(opcao_menu) != 2 || operacao < 1 || operacao > 6) { // A função strlen() retorna o tamanho (length) da variável, sendo o valor 2 no caso de um único caractere. Se for diferente de 2 (ou seja, se o usuário digitar mais de um caractere), ou se a variável "operacao" não estiver entre os números 1 e 6.
             wprintf(L"\nOpção inválida. Por favor, digite um número do menu.\n");
             valido = 0;    
         } else {
