@@ -23,14 +23,14 @@ int main() {
     do { 
         wprintf(L"\nDigite o primeiro número: "); // Exibe na tela a solicitação do primeiro número.
         fgets(primeiro_numero, 100, stdin); // A função fgets() lê o input do usuário (stdin) e armazena como string na variável "primeiro_numero".
-        a = strtof(primeiro_numero, &endptr); // A função strtof() converte a string "primeiro_numero" para float e armazena na variável "a". O ponteiro final (endptr) representa, nesta função, o próximo caractere da string após o valor numérico.
+        a = strtof(primeiro_numero, &endptr); // A função strtof() converte a string "primeiro_numero" para float, caso possível, e armazena na variável "a". O ponteiro final (endptr) representa, nesta função, o próximo caractere da string após o valor numérico. Se nenhum valor do tipo float for inserido, a string "primeiro_numero" e o ponteiro final (endptr) terão o mesmo valor.
 
         if (primeiro_numero == endptr) { // Se "primeiro_numero" for igual ao ponteiro final, ou seja, se nenhum valor válido (float) foi lido,
             wprintf(L"\nValor inválido. Por favor, digite um número inteiro ou decimal.\n"); // então é exibida uma mensagem de erro,
-            valido = 0; // e a variável "valido" continua igual a zero, mantendo assim o loop.
+            valido = 0; // e a variável "valido" continua igual a zero, mantendo o loop.
         } else if (strchr(primeiro_numero, ',') != NULL) { // A função strchr() busca por uma vírgula na string primeiro_numero. Se for verdadeiro (ou seja, != de NULL),
             wprintf(L"\nPor favor, separe a casa decimal com o ponto.\n"); // então é exibida uma mensagem de erro,
-            valido = 0; // e a variável "valido" continua igual a zero, mantendo assim o loop.
+            valido = 0; // e a variável "valido" continua igual a zero, mantendo o loop.
         } else {
             valido = 1; // Do contrário, tudo deu certo e se atribui o valor 1 à variável "valido", saindo do loop.
         }
@@ -40,9 +40,9 @@ int main() {
     do {
         wprintf(L"\nQue operação deseja realizar?\n\n1 - Soma\n2 - Subtração\n3 - Multiplicação\n4 - Divisão\n5 - Porcentagem\n6 - Potenciação\n\nOpção: ");
         fgets(opcao_menu, 100, stdin);
-        operacao = strtol(opcao_menu, &endptr,  10); // A função strtol() funciona da mesma forma que a função strtof(), mas converte para long ao invés de float.
+        operacao = atoi(opcao_menu); // A função atoi() converte qualquer valor possível para inteiro (int). Se não puder converter nada, o valor retornado é zero.
 
-        if (opcao_menu == endptr || operacao < 1 || operacao > 6) { // Além de checar se foi obtido um valor válido (float), verifica também se a variavel "operacao" contém um número disponível no menu.
+        if (strlen(opcao_menu) != 2 || operacao < 1 || operacao > 6) { // A função strlen() retorna o tamanho (length) da variável, sendo o valor 2 no caso de um único caractere. Se for diferente de 2 (ou seja, se o usuário digitar mais de um caractere), ou se a variável "operacao" não estiver entre os números 1 e 6
             wprintf(L"\nOpção inválida. Por favor, digite um número do menu.\n");
             valido = 0;    
         } else {
@@ -69,7 +69,7 @@ int main() {
     } while (!valido);
 
     // Mostra o resultado ao usuário
-    switch(operacao) { // O switch vai lidar com o valor digitado pelo usuário para a operação desejada.
+    switch(operacao) { // O switch vai lidar com o valor digitado pelo usuário para a operação desejada, armazenado na variável "operacao".
         case 1: // Se digitar 1,
             wprintf(L"\n%f mais %f é igual a: %f\n", a, b, a + b); // imprime a soma de "a" e "b",
             break; // e sai do loop.
@@ -101,9 +101,9 @@ int main() {
     do {
         wprintf(L"\nDeseja realizar outra operação?\n\n1 - Sim\n2 - Não\n\nOpção: ");
         fgets(opcao_sair, 100, stdin);
-        continuar = strtol(opcao_sair, &endptr,  10);
+        continuar = atoi(opcao_sair);
 
-        if (opcao_sair == endptr || continuar < 1 || continuar > 2) {
+        if (strlen(opcao_sair) != 2 || continuar < 1 || continuar > 2) {
             wprintf(L"\nOpcao inválida. Por favor, digite um número do menu.\n");
             valido = 0;    
         } else if (continuar == 1) { // Se o usuário digitar 1,
