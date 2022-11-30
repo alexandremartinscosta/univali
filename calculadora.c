@@ -24,7 +24,7 @@ void main() {
     do { 
         wprintf(L"\nDigite o primeiro número: "); // Exibe na tela a solicitação do primeiro número.
         fgets(primeiro_numero, 100, stdin); // A função fgets() lê o input do usuário (stdin) e armazena como string na variável "primeiro_numero".
-        a = strtof(primeiro_numero, &ponteiro_final); // A função strtof() converte a string "primeiro_numero" para float, caso possível, e armazena na variável "a". O ponteiro final representa o próximo caractere da string após o valor numérico capturado. Se nenhum valor do tipo float for inserido, a string "primeiro_numero" e o ponteiro "ponteiro_final" terão o mesmo valor.
+        a = strtof(primeiro_numero, &ponteiro_final); // A função strtof() converte a string "primeiro_numero" para float, caso possível, e armazena na variável "a". O ponteiro final representa o primeiro caractere que não pôde ser lido, ou seja, se nenhum valor do tipo float for inserido, a string "primeiro_numero" e o ponteiro "ponteiro_final" terão o mesmo valor.
 
         if (primeiro_numero == ponteiro_final) { // Se "primeiro_numero" for igual a "ponteiro_final", ou seja, se nenhum valor válido (float) foi lido,
             wprintf(L"\nValor inválido. Por favor, digite um número inteiro ou decimal.\n"); // então é exibida uma mensagem de erro,
