@@ -5,10 +5,11 @@
 #include <string.h> // Necessária para a função strchr().
 #include <locale.h> // Necessária para a função setlocale().
 
-int main() {
+// A função principal é do tipo "void" pois não retorna nenhum valor.
+void main() {
     
     // Declaração das variáveis.
-    char primeiro_numero[100], segundo_numero[100], opcao_menu[100], opcao_sair[100], *endptr;
+    char primeiro_numero[100], segundo_numero[100], opcao_menu[100], opcao_sair[100], *ponteiro_final;
     int operacao, valido, continuar;
     float a, b;
 
@@ -23,9 +24,9 @@ int main() {
     do { 
         wprintf(L"\nDigite o primeiro número: "); // Exibe na tela a solicitação do primeiro número.
         fgets(primeiro_numero, 100, stdin); // A função fgets() lê o input do usuário (stdin) e armazena como string na variável "primeiro_numero".
-        a = strtof(primeiro_numero, &endptr); // A função strtof() converte a string "primeiro_numero" para float, caso possível, e armazena na variável "a". O ponteiro final (endptr) representa, nesta função, o próximo caractere da string após o valor numérico. Se nenhum valor do tipo float for inserido, a string "primeiro_numero" e o ponteiro final (endptr) terão o mesmo valor.
+        a = strtof(primeiro_numero, &ponteiro_final); // A função strtof() converte a string "primeiro_numero" para float, caso possível, e armazena na variável "a". O ponteiro final representa o próximo caractere da string após o valor numérico capturado. Se nenhum valor do tipo float for inserido, a string "primeiro_numero" e o ponteiro "ponteiro_final" terão o mesmo valor.
 
-        if (primeiro_numero == endptr) { // Se "primeiro_numero" for igual ao ponteiro final, ou seja, se nenhum valor válido (float) foi lido,
+        if (primeiro_numero == ponteiro_final) { // Se "primeiro_numero" for igual a "ponteiro_final", ou seja, se nenhum valor válido (float) foi lido,
             wprintf(L"\nValor inválido. Por favor, digite um número inteiro ou decimal.\n"); // então é exibida uma mensagem de erro,
             valido = 0; // e a variável "valido" continua igual a zero, mantendo o loop.
         } else if (strchr(primeiro_numero, ',') != NULL) { // A função strchr() busca por uma vírgula na string primeiro_numero. Se for verdadeiro (ou seja, != de NULL),
@@ -55,9 +56,9 @@ int main() {
     do {
         wprintf(L"\nDigite o segundo número: ");
         fgets(segundo_numero, 100, stdin);
-        b = strtof(segundo_numero, &endptr);
+        b = strtof(segundo_numero, &ponteiro_final);
 
-        if (segundo_numero == endptr) {
+        if (segundo_numero == ponteiro_final) {
             wprintf(L"\nValor inválido. Por favor, digite um número inteiro ou decimal.\n");
             valido = 0;
         } else if (strchr(segundo_numero, ',') != NULL) {
@@ -93,8 +94,6 @@ int main() {
         case 6: // Se digitar 6,
             wprintf(L"\n%f elevado à potência %f é igual a: %f\n", a, b, pow(a,b)); // imprime a potenciação de "a" em "b",
             break; // e sai do loop.
-        default:
-            return 0; // O comportamento padrão (caso nenhum valor válido tenha sido digitado) é finalizar o programa, mas isso está previnido pela validação.
     }
 
     // Pergunta ao usuário se deseja realizar outra operação. Aqui a lógica da validação é a mesma utilizada na solicitação do menu de operações.
